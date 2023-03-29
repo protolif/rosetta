@@ -65,8 +65,7 @@ checksum_all_files_in () {
 	local folder=$1
 	# get files from directory listing
 	list_files_in "${folder}"
-	if [[ -n "$files" ]]
-	then
+	if [[ -n "$files" ]]; then
 		for file in $files; do
 			# echo "${folder}/${file}"
 			checksum_file "${folder}/${file}"
@@ -74,8 +73,7 @@ checksum_all_files_in () {
 	fi
 	list_subdirectories_in "${folder}"
 	# loop until there are no more subdirectories to crawl
-	if [[ -n "$subdirectories" ]]
-	then
+	if [[ -n "$subdirectories" ]]; then
 		for subdirectory in $subdirectories; do
 			# echo "${folder}/${subdirectory}"
 			checksum_all_files_in "${folder}/${subdirectory}"
