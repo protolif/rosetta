@@ -6,8 +6,10 @@ DOMAIN="$PROD_HOSTNAME"
 KEY="$PROD_API_KEY"
 SECRET="$PROD_API_SECRET"
 # Date Range
-START_ON="2023-01-10"
-END_ON="2023-03-24"
+START_ON="2023-03-01"
+END_ON="2023-03-30"
+# Export file format
+FORMAT="csv"
 # Pagination
 # Is not supported in the export endpoint, but is fast enough to not need to.
 # ["query should NOT have additional properties 'limit'","query should NOT have additional properties 'offset'"]
@@ -38,13 +40,13 @@ curl -v -X POST -u "${KEY}:${SECRET}" \
 	 -D "data/${DOMAIN}.session.headers.txt" \
 		"https://${DOMAIN}/api/2/session/"
 # Read sessionid from cookie jar
-# Request Activity Export to CSV
+# Request Activity Export
 curl -v -b "data/${DOMAIN}.session.cookie.jar.txt" \
 	 -D "data/${DOMAIN}.export.headers.txt" \
-	 "https://${DOMAIN}/api/3/activity/export/?timestamp\[\]=>=${START_ON}%2000:00:01&timestamp\[\]=<=${END_ON}%2023:59:59${my_fields}&format=csv" \
+	 "https://${DOMAIN}/api/3/activity/export/?timestamp\[\]=>=${START_ON}%2000:00:01&timestamp\[\]=<=${END_ON}%2023:59:59${my_fields}&format=${FORMAT}" \
      --max-time 120 \
      --retry 10 \
      --retry-delay 90 \
      --retry-max-time 120 \
 	 --retry-all-errors \
-	 --output "${FILE_PREFIX}.csv"
+	 --output "${FILE_PREFIX}.${FORMAT}"
