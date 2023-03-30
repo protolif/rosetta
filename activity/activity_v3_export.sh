@@ -14,9 +14,9 @@ FORMAT="csv"
 # Store it in the cookie jar
 # curl documentation: https://curl.se/docs/manpage.html
 curl -v -X POST -u "${KEY}:${SECRET}" \
-	 -c "data/${DOMAIN}.session.cookie.jar.txt" \
-	 -D "data/${DOMAIN}.session.headers.txt" \
-		"https://${DOMAIN}/api/2/session/"
+   -c "data/${DOMAIN}.session.cookie.jar.txt" \
+   -D "data/${DOMAIN}.session.headers.txt" \
+      "https://${DOMAIN}/api/2/session/"
 # Fields:
 # Specify the columns you want as fields[]
 # use brackets for array fields, but escape them
@@ -24,12 +24,12 @@ curl -v -X POST -u "${KEY}:${SECRET}" \
 DRY="&fields\[\]="
 # Declare String Array. If you want more fields, add them here:
 declare -a fields=( \
-	timestamp user_name user_username type action result conn_type ip_addr size country_name \
+  timestamp user_name user_username type action result conn_type ip_addr size country_name \
 )
 # Declare an empty string to be assembled in the for loop
 my_fields=""
 for field in "${fields[@]}"; do
-	my_fields+="$DRY$field"
+  my_fields+="$DRY$field"
 done
 # my fields are dry fields
 #
@@ -40,11 +40,11 @@ t="timestamp\[\]="
 e="/api/3/activity/export/"
 # Request Activity Export (session cookie auth)
 curl -v -b "data/${DOMAIN}.session.cookie.jar.txt" \
-	 -D "data/${DOMAIN}.export.headers.txt" \
-	 "https://${DOMAIN}$e?$t>=${START_ON}${AM}$t<=${END_ON}${PM}${my_fields}&format=${FORMAT}" \
+     -D "data/${DOMAIN}.export.headers.txt" \
+     "https://${DOMAIN}$e?$t>=${START_ON}${AM}$t<=${END_ON}${PM}${my_fields}&format=${FORMAT}" \
      --max-time 120 \
      --retry 10 \
      --retry-delay 90 \
      --retry-max-time 120 \
-	 --retry-all-errors \
-	 --output "data/${DOMAIN}.activity_from_${START_ON}_to_${END_ON}.${FORMAT}"
+     --retry-all-errors \
+     --output "data/${DOMAIN}.activity_from_${START_ON}_to_${END_ON}.${FORMAT}"
