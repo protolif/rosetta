@@ -3,6 +3,8 @@
 DOMAIN="$PROD_HOSTNAME"
 # REST API documentation: https://$DOMAIN/api
 #
+echo "Deprecation notice: This API endpoint was sunset on January 1, 2023. Please use version 3."
+#
 # Import secrets from Environment Variables
 KEY="$PROD_API_KEY"
 SECRET="$PROD_API_SECRET"
